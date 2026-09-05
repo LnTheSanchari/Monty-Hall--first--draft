@@ -52,13 +52,11 @@ class MontyHall():
     def __repr__(self):
         return f"monty_hall(doors: {self.doors})"
 
-def generalized_monty_hall(
-    trials,
-    N_doors,
-    phases,
-    *,
-    doors_opened_per_phase: list[int],
-    user_choices: list[bool] ):
+def generalized_monty_hall(trials,
+        N_doors,
+        phases, *,
+        doors_opened_per_phase: list[int],
+        user_choices: list[bool] ):
     """
     trials: Number of trials in this simulation.
     N_doors: Total number of doors.
