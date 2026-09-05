@@ -3,7 +3,7 @@
 import random
 from tqdm import tqdm
 
-class monty_hall():
+class MontyHall():
 
     def __init__(self, k:int) -> None:
         """
@@ -52,36 +52,62 @@ class monty_hall():
     def __repr__(self):
         return f"monty_hall(doors: {self.doors})"
 
-def monty_expt(trials, switch1: bool, switch2):
-    # In each trial we get an instance of monty hall.
-    success=0
+def generalized_monty_hall(
+    trials,
+    N_doors,
+    phases,
+    *,
+    doors_opened_per_phase: list[int],
+    user_choices: list[bool] ):
+    """
+    trials: Number of trials in this simulation.
+    N_doors: Total number of doors.
+    phases: The number of phases monty goes through.
+    doors_opened_per_phase:
+    Each index indicates number of doors monty opens in that phase.
+    user_choices:
+    Each index indicates whether the user switches after each phase.
+    """
+    
+    # Note: user_choices is a boolean array indicating
+    # whether the user switches after each phase.
+
+    # since the game ends with exactly two doors remaining.
+    assert len(user_choices) == phases
+
+    # Each phase must specify how many doors Monty opens.
+    assert len(doors_opened_per_phase) == phases
+
+    # Monty opens all but two doors, leaving the user's door
+    # and exactly one other unopened door.
+    assert sum(doors_opened_per_phase) == N_doors - 2
+
+    # Now we are good to go.
+    success = 0
+
+    # For each trial, go through each phase.
     for trial in tqdm(range(trials)):
-        monty_inst = monty_hall(10)
+
+        # Initialize a Monty Hall instance.
+        monty_inst = MontyHall(N_doors)
+
+        # User randomly picks a door.
         user_choice = random.choice(monty_inst.doors)
-        #one user made his choice, monty opens the door.
-        monty_inst.open_door(4, user_choice)
-        #in this version, monty opens only one door.
-        if switch1:
-            user_choice = monty_inst.exchange_door(user_choice)
-        #first phase is done.
 
-        #monty opens second set of 4 doors.
-        monty_inst.open_door(4, user_choice)
+        for index in range(phases):
 
-        if switch2:
-            user_choice = monty_inst.exchange_door(user_choice)
-        #second phase is done.
+            # Open the specified number of doors in this phase.
+            monty_inst.open_door(
+                doors_opened_per_phase[index],
+                user_choice
+            )
 
-        #at this point, monty open user choice, if it's car door then success
+           # After each phase, user decides whether to switch.
+            if user_choices[index]:
+                user_choice = monty_inst.exchange_door(user_choice)
 
+        # Check whether the user's final choice is the car door.
         if user_choice == monty_inst.car_door:
-            success+=1
-    return success/trials
+            success += 1
 
-# monty_expt(3_00_000, True, False) #Theo: 18%
-
-# monty_expt(3_00_000, True, True) #Theo: 82%
-
-# monty_expt(3_00_000, False, True) #Theo: 90%
-
-# monty_expt(3_00_000, False, False) #Theo: 10%
+    return success / trials
