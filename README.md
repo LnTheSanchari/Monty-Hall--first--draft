@@ -1,10 +1,50 @@
-# Monty Hall Simulation
+# Generalized Monty Hall
 
-This repository contains code part of monty hall class. A monty hall instance has following attributes:
-* car door
-* doors (list of open doors)
-* info (information about doors)
+A simulation of the **Monty Hall problem**, extended to multiple doors and multiple phases of door openings.
 
-In initialization part we **randomly pick one of the doors as car door**. We can think of this as monty knows which door is car door. We have method on monty hall instance that is open doors. When the method is called, **monty randomly picks r doors**. 
-  
-The code as example of monty hall problem in multiple phases, one interesting question is: which strategy works better in multiple phases of Monty Hall? Good Luck.
+### Features
+
+* Arbitrary number of doors
+* Multiple phases of door openings
+* Switch/stay decisions after each phase
+* Monte Carlo estimation of winning probabilities
+
+### Example
+
+A 10-door game can be configured as:
+
+```text
+10 doors
+   ↓
+Monty opens 3
+   ↓
+Monty opens 3
+   ↓
+Monty opens 2
+   ↓
+2 doors remain
+```
+
+The player's strategy can be represented as:
+
+```python
+[True, False, True]
+```
+
+where `True` means **switch** after that phase.
+
+The simulation can then be used to compare different strategies and visualize how their empirical winning probabilities converge as the number of trials increases.
+
+## The Question
+
+The classical Monty Hall problem asks:
+
+> **Should you switch?**
+
+This generalized version asks:
+
+> **When should you switch?**
+
+---
+
+**Simulation • Probability • Monte Carlo • Python**
