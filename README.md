@@ -1,13 +1,13 @@
-# Generalized Monty Hall
+🐐🎲 Generalized Monty Hall
 
 A simulation of the **Monty Hall problem**, extended to multiple doors and multiple phases of door openings.
 
 ### Features
 
-* Arbitrary number of doors
-* Multiple phases of door openings
-* Switch/stay decisions after each phase
-* Monte Carlo estimation of winning probabilities
+- 🚪 Arbitrary number of doors
+- 🔄 Multiple phases of door openings
+- 🎯 Switch/stay decisions after each phase
+- 📊 Monte Carlo estimation of winning probabilities
 
 ### Example
 
